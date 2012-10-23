@@ -4,15 +4,6 @@ namespace SocialogCodeMirror\Renderer;
 
 class Sundown extends \Sundown\Render\Html
 {
-    public function __construct()
-    {
-        parent::__construct(array(
-            'hard_wrap' => TRUE,
-            'filter_html' => FALSE,
-            'with_toc_data' => TRUE,
-        ));
-    }
-
     public function codespan($text)
     {
         return '<code>' . $text . '</code>';

@@ -2,13 +2,17 @@
 
 namespace SocialogCodeMirror;
 
+use Zend\Mvc\MvcEvent;
+
 /**
  * Socialog CodeMirror Module
  */
 class Module
 {
-
-    public function onBootstrap($e)
+    /**
+     * @param \Zend\Mvc\MvcEvent $e
+     */
+    public function onBootstrap(MvcEvent $e)
     {
         $app = $e->getApplication();
         $sm = $app->getServiceManager();
@@ -49,20 +53,17 @@ SCRIPT
                     );
         });
 
-        // Inhaken in menue
         $sharedEventManager->attach('Socialog\Mapper\PostMapper', 'save', function($e) use ($sm) {
             $post = $e->getParam('post');
             $renderer = $sm->get('socialog_codemirror_sundownrenderer');
             $post->setContentHtml($renderer->render($post->getContent()));
         }, 100);
-    }
 
-    /**
-     * @return array
-     */
-    public function getConfig()
-    {
-        return include __DIR__ . '/config/module.config.php';
+        $sharedEventManager->attach('Socialog\Mapper\PageMapper', 'save', function($e) use ($sm) {
+            $post = $e->getParam('page');
+            $renderer = $sm->get('socialog_codemirror_sundownrenderer');
+            $post->setContentHtml($renderer->render($post->getContent()));
+        }, 100);
     }
 
     /**
@@ -80,21 +81,21 @@ SCRIPT
     }
 
     /**
+     * @return array
+     */
+    public function getConfig()
+    {
+        return include __DIR__ . '/config/module.config.php';
+    }
+
+    /**
      * Service Configuration
      * 
      * @return array
      */
     public function getServiceConfig()
     {
-        return array(
-            'factories' => array(
-                'socialog_codemirror_sundownrenderer' => function($sm) {
-                    $render = new Renderer\Sundown();
-                    $md = new \Sundown\Markdown($render);
-                    return $md;
-                }
-            )
-        );
+        return include __DIR__ . '/config/service.config.php';
     }
 
 }
