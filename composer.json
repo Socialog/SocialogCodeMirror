@@ -1,0 +1,21 @@
+{
+    "name": "socialog/codemirror",
+    "description": "Codemirror module for Socialog",
+    "type": "Module",
+    "license": "MIT",
+    "keywords": [
+        "codemirror",
+        "socialog"
+    ],
+    "homepage": "http://www.socialog.io/",
+    "authors": [
+        {
+            "name": "Roy van Kaathoven",
+            "email": "roy@kj.nu",
+            "homepage": "http://www.socialog.io/"
+        }
+    ],
+    "require": {
+        "socialog/socialog": "dev-master"
+    }
+}
